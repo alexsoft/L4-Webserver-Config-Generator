@@ -10,15 +10,11 @@ use File;
 class NginxGeneratorCommand extends Command
 {
 
-	protected $file;
-
-	protected $view;
-
 	/**
 	 * The console command name.
 	 * @var string
 	 */
-	protected $name = 'nginx:gen';
+	protected $name = 'nginx:generate';
 
 	/**
 	 * The console command description.
@@ -31,10 +27,8 @@ class NginxGeneratorCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function __construct(Filesystem $file, Environment $environment)
+	public function __construct()
 	{
-		$this->file = $file;
-		$this->view = $environment;
 		parent::__construct();
 	}
 
