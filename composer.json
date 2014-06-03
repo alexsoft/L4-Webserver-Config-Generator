@@ -1,6 +1,7 @@
 {
     "name": "alexsoft/nginx-generator",
-    "description": "",
+    "licence": "MIT",
+    "description": "Package for generating nginx configuration file for your Laravel app",
     "authors": [
         {
             "name": "Alexey Plekhanov",
