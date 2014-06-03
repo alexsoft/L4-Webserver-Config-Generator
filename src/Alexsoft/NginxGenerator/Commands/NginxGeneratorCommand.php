@@ -20,7 +20,7 @@ class NginxGeneratorCommand extends Command
 	 * The console command description.
 	 * @var string
 	 */
-	protected $description = 'Generate nginx configuration file';
+	protected $description = 'Generate a configuration file for nginx';
 
 	/**
 	 * Create a new command instance.
