@@ -10,7 +10,7 @@ class NginxGeneratorServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * Bootstrap the application events.
@@ -44,7 +44,7 @@ class NginxGeneratorServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('nginx.generator');
 	}
 
 }

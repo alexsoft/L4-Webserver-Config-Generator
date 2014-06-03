@@ -2,6 +2,7 @@
     "name": "alexsoft/nginx-generator",
     "license": "MIT",
     "description": "Package for generating nginx configuration file for your Laravel app",
+    "keywords": ["laravel", "nginx", "config", "generator"],
     "authors": [
         {
             "name": "Alexey Plekhanov",
@@ -10,7 +11,9 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.1.*"
+        "illuminate/support": "4.1.*",
+        "illuminate/filesystem": "4.1.*",
+        "illuminate/view": "4.1.*"
     },
     "autoload": {
         "classmap": [

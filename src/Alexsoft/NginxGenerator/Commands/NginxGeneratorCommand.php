@@ -4,9 +4,15 @@ namespace Alexsoft\NginxGenerator\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use View;
+use File;
 
 class NginxGeneratorCommand extends Command
 {
+
+	protected $file;
+
+	protected $view;
 
 	/**
 	 * The console command name.
@@ -18,15 +24,17 @@ class NginxGeneratorCommand extends Command
 	 * The console command description.
 	 * @var string
 	 */
-	protected $description = 'Generate nginx conf';
+	protected $description = 'Generate nginx configuration file';
 
 	/**
 	 * Create a new command instance.
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(Filesystem $file, Environment $environment)
 	{
+		$this->file = $file;
+		$this->view = $environment;
 		parent::__construct();
 	}
 
@@ -36,51 +44,44 @@ class NginxGeneratorCommand extends Command
 	 */
 	public function fire()
 	{
-		$serverName = $this->argument('serverName');
-
-		$env = $this->option('env') ?: 'production';
-		$fileName = $this->option('file');
-
-		dd(compact('env', 'serverName', 'fileName'));
-
-		
-
-
-
-
-
-		$data = array(
-			'serverName' => '',
-			'logsPath' => storage_path('logs'),
-			'fastcgiPass' => ''
-		);
-
-		die;
 		$env = $this->option('env');
-		if (!isset($env)) {
-			$env = 'production';
+
+		$serverName = $this->ask('Which server name will it be? (e.g. google.com)');
+		if (is_null($serverName)) {
+			$this->error('Error! You have to specify server name!');
+			exit;
 		}
 
-		$dir = app_path() . '/config/' . $env;
-		$file = $dir . '/' . $this->option('file');
+		$fileName = $this->ask('Which name should the file have? [nginx.conf]', 'nginx.conf');
+
+		$logsPath = $this->ask('Where should access and error logs be placed? [' . storage_path('logs') . ']', storage_path('logs'));
+
+		$fastcgiPass = $this->ask('Specify a fastcgi_pass parameter [unix:/var/run/php5-fpm.sock]', 'unix:/var/run/php5-fpm.sock');
+
+		if (is_null($env)) {
+			$directory = app_path('config/');
+		} else {
+			$directory = app_path('config/' . $env . '/');
+		}
+
+		$file = $directory . $fileName;
 
 		if (File::exists($file)) {
 			if (!$this->confirm("{$file} exists. Do you want to overwrite it? [yes|NO]", FALSE)) {
 				exit;
 			}
 		} else {
-			if (!File::isDirectory($dir)) {
-				File::makeDirectory($dir);
+			if (!File::isDirectory($directory)) {
+				File::makeDirectory($directory);
 			}
 		}
 
-		File::put(
-			$file,
-			"server {\n" .
-			"	server_name {$this->argument('server')};\n\n" .
-			File::get(app_path() . '/config/nginx.conf') .
-			"\n}"
-		);
+		$content = View::make('nginx-generator::nginx', compact('serverName', 'logsPath', 'fastcgiPass'))->render();
+		if (File::put($file, $content)) {
+			$this->comment("File {$file} was successfully created!");
+		} else {
+			$this->error('Something went wrong. Check writing permissions and try again.');
+		}
 	}
 
 	/**
@@ -89,9 +90,7 @@ class NginxGeneratorCommand extends Command
 	 */
 	protected function getArguments()
 	{
-		return array(
-			array('serverName', InputArgument::REQUIRED, 'Server name (e.g. google.com)')
-		);
+		return array();
 	}
 
 	/**
@@ -100,10 +99,7 @@ class NginxGeneratorCommand extends Command
 	 */
 	protected function getOptions()
 	{
-		return array(
-			array('logs', NULL, InputArgument::OPTIONAL, 'Location for logs files', storage_path('logs')),
-			array('file', NULL, InputArgument::OPTIONAL, 'Name of nginx config file', 'nginx.conf')
-		);
+		return array();
 	}
 
 }
