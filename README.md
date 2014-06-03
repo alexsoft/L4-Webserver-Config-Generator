@@ -4,7 +4,7 @@
 First install it using Composer. Edit your project's `composer.json` file to require `alexsoft/nginx-generator`.
 
     "require-dev": {
-        "alexsoft/nginx-generator": "~0.1.1"
+        "alexsoft/nginx-generator": "~1.0.2"
     }
 
 Next, update Composer from the Terminal:
