@@ -10,90 +10,90 @@ use File;
 class NginxGeneratorCommand extends Command
 {
 
-	/**
-	 * The console command name.
-	 * @var string
-	 */
-	protected $name = 'nginx:generate';
+    /**
+     * The console command name.
+     * @var string
+     */
+    protected $name = 'nginx:generate';
 
-	/**
-	 * The console command description.
-	 * @var string
-	 */
-	protected $description = 'Generate a configuration file for nginx';
+    /**
+     * The console command description.
+     * @var string
+     */
+    protected $description = 'Generate a configuration file for nginx';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * Execute the console command.
-	 * @return mixed
-	 */
-	public function fire()
-	{
-		$env = $this->option('env');
+    /**
+     * Execute the console command.
+     * @return mixed
+     */
+    public function fire()
+    {
+        $env = $this->option('env');
 
-		$serverName = $this->ask('Which server name will it be? (e.g. google.com)');
-		if (is_null($serverName)) {
-			$this->error('Error! You have to specify server name!');
-			exit;
-		}
+        $serverName = $this->ask('Which server name will it be? (e.g. google.com)');
+        if (is_null($serverName)) {
+            $this->error('Error! You have to specify server name!');
+            exit;
+        }
 
-		$fileName = $this->ask('Which name should the file have? [nginx.conf]', 'nginx.conf');
+        $fileName = $this->ask('Which name should the file have? [nginx.conf]', 'nginx.conf');
 
-		$logsPath = $this->ask('Where should access and error logs be placed? [' . storage_path('logs') . ']', storage_path('logs'));
+        $logsPath = $this->ask('Where should access and error logs be placed? [' . storage_path('logs') . ']', storage_path('logs'));
 
-		$fastcgiPass = $this->ask('Specify a fastcgi_pass parameter [unix:/var/run/php5-fpm.sock]', 'unix:/var/run/php5-fpm.sock');
+        $fastcgiPass = $this->ask('Specify a fastcgi_pass parameter [unix:/var/run/php5-fpm.sock]', 'unix:/var/run/php5-fpm.sock');
 
-		if (is_null($env)) {
-			$directory = app_path('config/');
-		} else {
-			$directory = app_path('config/' . $env . '/');
-		}
+        if (is_null($env)) {
+            $directory = app_path('config/');
+        } else {
+            $directory = app_path('config/' . $env . '/');
+        }
 
-		$file = $directory . $fileName;
+        $file = $directory . $fileName;
 
-		if (File::exists($file)) {
-			if (!$this->confirm("{$file} exists. Do you want to overwrite it? [yes|NO]", FALSE)) {
-				exit;
-			}
-		} else {
-			if (!File::isDirectory($directory)) {
-				File::makeDirectory($directory);
-			}
-		}
+        if (File::exists($file)) {
+            if (!$this->confirm("{$file} exists. Do you want to overwrite it? [yes|NO]", FALSE)) {
+                exit;
+            }
+        } else {
+            if (!File::isDirectory($directory)) {
+                File::makeDirectory($directory);
+            }
+        }
 
-		$content = View::make('nginx-generator::nginx', compact('serverName', 'logsPath', 'fastcgiPass'))->render();
-		if (File::put($file, $content)) {
-			$this->comment("File {$file} was successfully created!");
-		} else {
-			$this->error('Something went wrong. Check writing permissions and try again.');
-		}
-	}
+        $content = View::make('nginx-generator::nginx', compact('serverName', 'logsPath', 'fastcgiPass'))->render();
+        if (File::put($file, $content)) {
+            $this->comment("File {$file} was successfully created!");
+        } else {
+            $this->error('Something went wrong. Check writing permissions and try again.');
+        }
+    }
 
-	/**
-	 * Get the console command arguments.
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return array();
-	}
+    /**
+     * Get the console command arguments.
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return array();
+    }
 
-	/**
-	 * Get the console command options.
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return array();
-	}
+    /**
+     * Get the console command options.
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return array();
+    }
 
 }
