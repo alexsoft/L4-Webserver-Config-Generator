@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Alexsoft\WebserverGenerator\Commands\NginxGeneratorCommand;
 use Alexsoft\WebserverGenerator\Commands\ApacheGeneratorCommand;
+use Illuminate\Support\Facades\View as V;
 
 class WebserverGeneratorServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,8 @@ class WebserverGeneratorServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        V::addNamespace('webserver-config-generator', __DIR__ . '/views');
+
         $this->app['webserver.nginx.generator'] = $this->app->share(function ($app) {
             return new NginxGeneratorCommand();
         });

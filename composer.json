@@ -17,8 +17,8 @@
         "illuminate/console": "4.*"
     },
     "autoload": {
-        "psr-0": {
-            "Alexsoft": "src/"
+        "psr-4": {
+            "Alexsoft\\WebserverGenerator\\": "src/"
         }
     },
     "minimum-stability": "stable"
