@@ -1,5 +1,5 @@
 <?php
-namespace Alexsoft\NginxGenerator\Commands;
+namespace Alexsoft\WebserverGenerator\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,13 +14,13 @@ class NginxGeneratorCommand extends Command
      * The console command name.
      * @var string
      */
-    protected $name = 'nginx:generate';
+    protected $name = 'webserver:nginx';
 
     /**
      * The console command description.
      * @var string
      */
-    protected $description = 'Generate a configuration file for nginx';
+    protected $description = 'Generate a config file for nginx';
 
     /**
      * Create a new command instance.
@@ -70,7 +70,7 @@ class NginxGeneratorCommand extends Command
             }
         }
 
-        $content = View::make('nginx-generator::nginx', compact('serverName', 'logsPath', 'fastcgiPass'))->render();
+        $content = View::make('webserver-config-generator::nginx', compact('serverName', 'logsPath', 'fastcgiPass'))->render();
         if (File::put($file, $content)) {
             $this->comment("File {$file} was successfully created!");
         } else {

@@ -1,8 +1,8 @@
 {
-    "name": "alexsoft/nginx-generator",
+    "name": "alexsoft/webserver-config-generator",
     "license": "MIT",
-    "description": "Package for generating nginx configuration file for your Laravel app",
-    "keywords": ["laravel", "nginx", "config", "generator"],
+    "description": "Package for generating webserver configuration file for your Laravel app",
+    "keywords": ["laravel", "nginx", "apache", "config", "generator"],
     "authors": [
         {
             "name": "Alexey Plekhanov",
