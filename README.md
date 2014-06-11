@@ -1,4 +1,4 @@
-# Website config generator for Laravel 4
+# Webserver config generator for Laravel 4
 
 ## Instalation
 First install it using Composer. Edit your project's `composer.json` file to require `alexsoft/webserver-config-generator`.
