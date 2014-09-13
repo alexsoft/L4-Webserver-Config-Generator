@@ -5,7 +5,7 @@
 First install it using Composer. Edit your project's `composer.json` file to require `alexsoft/webserver-config-generator`.
 
     "require": {
-        "alexsoft/webserver-config-generator": "~1.3.0"
+        "alexsoft/webserver-config-generator": "~1.3.1"
     }
 
 Next, update Composer from the Terminal:
