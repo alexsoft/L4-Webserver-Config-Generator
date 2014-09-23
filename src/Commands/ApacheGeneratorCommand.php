@@ -50,9 +50,9 @@ class ApacheGeneratorCommand extends Command
         $logsPath = $this->ask('Where should access and error logs be placed? [' . storage_path('logs') . ']', storage_path('logs'));
 
         if (is_null($env)) {
-            $directory = app_path('config/');
+            $directory = app('path.config') . '/';
         } else {
-            $directory = app_path('config/' . $env . '/');
+            $directory = app('path.config') . '/' . $env . '/');
         }
 
         $file = $directory . $fileName;

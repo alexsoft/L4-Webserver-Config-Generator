@@ -53,9 +53,9 @@ class NginxGeneratorCommand extends Command
         $fastcgiPass = $this->ask('Specify a fastcgi_pass parameter [unix:/var/run/php5-fpm.sock]', 'unix:/var/run/php5-fpm.sock');
 
         if (is_null($env)) {
-            $directory = app_path('config/');
+            $directory = app('path.config') . '/';
         } else {
-            $directory = app_path('config/' . $env . '/');
+            $directory = app('path.config') . '/' . $env . '/');
         }
 
         $file = $directory . $fileName;
