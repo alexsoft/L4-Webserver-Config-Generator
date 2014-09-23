@@ -52,7 +52,7 @@ class ApacheGeneratorCommand extends Command
         if (is_null($env)) {
             $directory = app('path.config') . '/';
         } else {
-            $directory = app('path.config') . '/' . $env . '/');
+            $directory = app('path.config') . '/' . $env . '/';
         }
 
         $file = $directory . $fileName;
